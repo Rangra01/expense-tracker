@@ -1,37 +1,22 @@
 import { useEffect, useState } from "react";
 import API from "../api/api";
-import Sidebar from "../components/Sidebar";
+import MainLayout from "../layouts/MainLayout";
 
 const AIInsights = () => {
-  const [insight, setInsight] = useState("");
+  const [insight,setInsight]=useState("");
 
-  useEffect(() => {
-    fetchInsights();
-  }, []);
-
-  const fetchInsights = async () => {
-    try {
-      const res = await API.get("/ai/insights");
-      setInsight(res.data.insight);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  useEffect(()=>{
+    API.get("/ai/insights").then(res=>setInsight(res.data.insight));
+  },[]);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <Sidebar />
+    <MainLayout>
+      <h1 className="text-2xl mb-6">AI Insights</h1>
 
-      <div className="flex-1 md:ml-64 p-4 md:p-6">
-        <h1 className="text-2xl md:text-3xl mb-6">🤖 AI Insights</h1>
-
-        <div className="glass p-6 rounded-xl">
-          <p className="text-gray-300">
-            {insight || "Analyzing your financial data..."}
-          </p>
-        </div>
+      <div className="glass p-4 rounded-xl">
+        {insight}
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

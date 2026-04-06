@@ -29,7 +29,9 @@ const Auth = () => {
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
-        navigate("/");
+       if (localStorage.getItem("token")) {
+  window.location.href = "/";
+}
       } else {
         await API.post("/auth/register", form);
         alert("Signup successful! Please login.");

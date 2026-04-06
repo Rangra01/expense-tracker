@@ -1,24 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-
-import Auth from "./pages/Auth";
 import Transactions from "./pages/Transactions";
-import AIInsights from "./pages/AIInsights";
+import Auth from "./pages/Auth";
 
-// 🔐 Private Route
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
+
   return token ? children : <Auth />;
 };
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/* Login */}
+
         <Route path="/login" element={<Auth />} />
 
-        {/* Dashboard */}
         <Route
           path="/"
           element={
@@ -28,7 +25,6 @@ function App() {
           }
         />
 
-        {/* Transactions */}
         <Route
           path="/transactions"
           element={
@@ -38,16 +34,8 @@ function App() {
           }
         />
 
-        <Route
-  path="/ai"
-  element={
-    <PrivateRoute>
-      <AIInsights />
-    </PrivateRoute>
-  }
-/>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
